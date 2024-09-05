@@ -1,5 +1,4 @@
 import 'package:animated_flutter_widgets/animated_widgets.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:example/animation/animation_catlog.dart';
 import 'package:example/page_transition/page_transition_animations.dart';
 import 'package:example/utility/color.dart';
@@ -7,35 +6,27 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  // runApp(DevicePreview(
-  //   enabled: !kReleaseMode,
-  //   builder: (context) => const MyApp(), // Wrap your app
-  // ));
-  var data;
   initializeData();
-  
   runApp(const MyApp());
 }
 
-initializeData(){
-  print("data initialized");
+void initializeData() {
+  debugPrint("Data initialized");
 }
 
-/// The main application widget for the Flutter app.
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const Animations(),
+      home: const AnimationsScreen(),
     );
   }
 }
 
-/// The main widget that displays animations in the app.
-class Animations extends StatelessWidget {
-  const Animations({Key? key}) : super(key: key);
+class AnimationsScreen extends StatelessWidget {
+  const AnimationsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,57 +35,72 @@ class Animations extends StatelessWidget {
         backgroundColor: ColorUtility.magenta,
         title: const Text("Animation Widget Example"),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // SlideInAnimation for Page Transition Animations button
-            SlideInAnimation(
-              direction: Direction.down,
-              duration: const Duration(seconds: 1),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    ScaleSlideTransition(
-                      page: const PageTransitionAnimationWidget(),
-                      isLeftScaled: false,
-                    ),
-                  );
-                },
-                child: const Text(
-                  'Page Transition Animations',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
+      body: const AnimationButtons(),
+    );
+  }
+}
 
-            // SlideInAnimation for Animations button
-            SlideInAnimation(
-              direction: Direction.up,
-              duration: const Duration(seconds: 1),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    PopAndScaleTransition(page: const AnimationCatlog()),
-                  );
-                },
-                child: const Text(
-                  'Animations',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-          ],
+class AnimationButtons extends StatelessWidget {
+  const AnimationButtons({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          AnimatedButton(
+            text: 'Page Transition Animations',
+            destination: PageTransitionAnimationWidget(),
+            direction: Direction.down,
+          ),
+          AnimatedButton(
+            text: 'Animations',
+            destination: AnimationCatlog(),
+            direction: Direction.up,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AnimatedButton extends StatelessWidget {
+  final String text;
+  final Widget destination;
+  final Direction direction;
+
+  const AnimatedButton({
+    Key? key,
+    required this.text,
+    required this.destination,
+    required this.direction,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SlideInAnimation(
+      direction: direction,
+      duration: const Duration(seconds: 1),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: ColorUtility.magenta,
         ),
+        onPressed: () => _navigateTo(context, destination),
+        child: Text(
+          text,
+          style: const TextStyle(color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  void _navigateTo(BuildContext context, Widget destination) {
+    Navigator.push(
+      context,
+      ScaleSlideTransition(
+        page: destination,
+        isLeftScaled: false,
       ),
     );
   }
