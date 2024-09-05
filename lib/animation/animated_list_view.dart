@@ -5,55 +5,65 @@ import 'package:example/utility/color.dart';
 import 'package:flutter/material.dart';
 
 class AnimatedListView extends StatelessWidget {
-  ///Type of animation for the list view
   final ScrollWidgetAnimationType scrollWidgetAnimationType;
 
-  ///Constructor
   const AnimatedListView({
-    super.key,
+    Key? key,
     required this.scrollWidgetAnimationType,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: FadeInAnimatedAppBar(
-        backgroundColor: ColorUtility.magenta,
-        title: const Text('Animated ListView'),
+      appBar: const _AnimatedAppBar(),
+      body: const _AnimatedListViewBody(),
+    );
+  }
+}
+
+class _AnimatedAppBar extends StatelessWidget {
+  const _AnimatedAppBar();
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeInAnimatedAppBar(
+      backgroundColor: ColorUtility.magenta,
+      title: const Text('Animated ListView'),
+    );
+  }
+}
+
+class _AnimatedListViewBody extends StatelessWidget {
+  const _AnimatedListViewBody();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: AnimatedListViewBuilder(
+        itemCount: 25,
+        customColor: ColorUtility.magenta,
+        animationType: ScrollWidgetAnimationType.listColored,
+        itemBuilder: _buildListItem,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: AnimatedListViewBuilder(
-          itemCount: 25,
+    );
+  }
 
-          ///Change this to your desired item count
-          customColor: ColorUtility.magenta,
-          animationType: scrollWidgetAnimationType,
-          itemBuilder: (context, index) {
-            return Card(
-              color: (scrollWidgetAnimationType ==
-                      ScrollWidgetAnimationType.listColored)
-                  ? ColorUtility.white
-                  : ColorUtility.magenta,
-              child: Center(
-                child: ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(
-                    'Item $index',
-                    style: TextStyle(
-                      color: (scrollWidgetAnimationType ==
-                              ScrollWidgetAnimationType.listColored)
-                          ? ColorUtility.magenta
-                          : ColorUtility.white,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            );
-          },
+  Widget _buildListItem(BuildContext context, int index) {
+    final isColored = ScrollWidgetAnimationType.listColored;
 
-          ///Use the custom animation
+    return Card(
+      color: isColored ? ColorUtility.white : ColorUtility.magenta,
+      child: Center(
+        child: ListTile(
+          contentPadding: EdgeInsets.zero,
+          title: Text(
+            'Item $index',
+            style: TextStyle(
+              color: isColored ? ColorUtility.magenta : ColorUtility.white,
+            ),
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );

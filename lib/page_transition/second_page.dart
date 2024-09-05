@@ -12,71 +12,82 @@ class SecondPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getAppBar(),
-
-      /// Determine which app bar to display
-      body: Container(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.star,
-              size: 80,
-              color: ColorUtility.magenta,
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'Welcome to the Second Page!',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta),
-              onPressed: () {
-                Navigator.pop(context);
-
-                /// Navigate back to the previous page
-              },
-              child: const Text('Go Back'),
-            ),
-          ],
-        ),
-      ),
+      appBar: _buildAppBar(),
+      body: const SecondPageBody(),
     );
   }
 
-  PreferredSizeWidget getAppBar() {
+  PreferredSizeWidget _buildAppBar() {
     switch (appBarAnimationType) {
       case AppBarAnimationType.fadeIn:
-
-        /// Display a fade-in animated app bar
-        return FadeInAnimatedAppBar(
-          backgroundColor: ColorUtility.magenta,
-          animationDuration: 1000,
-          title: const Text('Second Page'),
-        );
+        return _createAnimatedAppBar(FadeInAnimatedAppBar());
       case AppBarAnimationType.slideIn:
-
-        /// Display a slide-in animated app bar
-        return SlideInAnimatedAppBar(
-          backgroundColor: ColorUtility.magenta,
-          animationDuration: 1000,
-          title: const Text('Second Page'),
-        );
+        return _createAnimatedAppBar(SlideInAnimatedAppBar());
       default:
-
-        /// Display a regular app bar
-        return AppBar(
-          backgroundColor: ColorUtility.magenta,
-          title: const Text('Second Page'),
-        );
+        return _createStandardAppBar();
     }
+  }
+
+  PreferredSizeWidget _createAnimatedAppBar(PreferredSizeWidget appBar) {
+    return appBar.copyWith(
+      backgroundColor: ColorUtility.magenta,
+      animationDuration: const Duration(milliseconds: 1000),
+      title: const Text('Second Page'),
+    );
+  }
+
+  AppBar _createStandardAppBar() {
+    return AppBar(
+      backgroundColor: ColorUtility.magenta,
+      title: const Text('Second Page'),
+    );
+  }
+}
+
+class SecondPageBody extends StatelessWidget {
+  const SecondPageBody({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          Icon(
+            Icons.star,
+            size: 80,
+            color: ColorUtility.magenta,
+          ),
+          SizedBox(height: 20),
+          Text(
+            'Welcome to the Second Page!',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 20),
+          GoBackButton(),
+        ],
+      ),
+    );
+  }
+}
+
+class GoBackButton extends StatelessWidget {
+  const GoBackButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: ColorUtility.magenta,
+      ),
+      onPressed: () => Navigator.pop(context),
+      child: const Text('Go Back'),
+    );
   }
 }
