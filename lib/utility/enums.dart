@@ -1,21 +1,16 @@
-/// Enumeration representing different types of animations.
 enum AnimationType {
-  contineous,
+  continuous, // Corrected spelling
 
-  /// Represents continuous animation..
-  steady,
-
-  /// Represents steady animation.
-  buttonTap
-
+  /// Represents continuous animation.
+  steady, // Represents steady animation.
+  
   /// Represents animation triggered by a button tap.
+  buttonTap,
 }
 
 enum ListType {
-  listView,
-
-  /// Represents a list view.
-  gridView
+  listView, // Represents a list view.
 
   /// Represents a grid view.
+  gridView,
 }

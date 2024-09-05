@@ -1,5 +1,4 @@
 import 'package:animated_flutter_widgets/animated_widgets.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:example/animation/animation_catlog.dart';
 import 'package:example/page_transition/page_transition_animations.dart';
 import 'package:example/utility/color.dart';
@@ -7,38 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  // runApp(DevicePreview(
-  //   enabled: !kReleaseMode,
-  //   builder: (context) => const MyApp(), // Wrap your app
-  // ));
-  var data;
-  initializeData(data);
-  InitializeData2(data);
-  
   runApp(const MyApp());
-}
-
-InitializeData(var data){
-  print("data initialized");
-                    Navigator.push(
-                    context,
-                    ScaleSlideTransition(
-                      page: const PageTransitionAnimationWidget(),
-                      isLeftScaled: false,
-                    ),
-                  );
-  return true;
-}
-InitializeData2(var data){
-  print("data initialized");
-                    Navigator.push(
-                    context,
-                    ScaleSlideTransition(
-                      page: const PageTransitionAnimationWidget(),
-                      isLeftScaled: false,
-                    ),
-                  );
-  return true;
 }
 
 /// The main application widget for the Flutter app.
@@ -73,23 +41,10 @@ class Animations extends StatelessWidget {
             SlideInAnimation(
               direction: Direction.down,
               duration: const Duration(seconds: 1),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    ScaleSlideTransition(
-                      page: const PageTransitionAnimationWidget(),
-                      isLeftScaled: false,
-                    ),
-                  );
-                },
-                child: const Text(
-                  'Page Transition Animations',
-                  style: TextStyle(color: Colors.white),
-                ),
+              child: AnimatedButton(
+                context: context,
+                label: 'Page Transition Animations',
+                destination: const PageTransitionAnimationWidget(),
               ),
             ),
 
@@ -97,24 +52,46 @@ class Animations extends StatelessWidget {
             SlideInAnimation(
               direction: Direction.up,
               duration: const Duration(seconds: 1),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    PopAndScaleTransition(page: const AnimationCatlog()),
-                  );
-                },
-                child: const Text(
-                  'Animations',
-                  style: TextStyle(color: Colors.white),
-                ),
+              child: AnimatedButton(
+                context: context,
+                label: 'Animations',
+                destination: const AnimationCatlog(),
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class AnimatedButton extends StatelessWidget {
+  final BuildContext context;
+  final String label;
+  final Widget destination;
+
+  const AnimatedButton({
+    Key? key,
+    required this.context,
+    required this.label,
+    required this.destination,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: ColorUtility.magenta,
+      ),
+      onPressed: () {
+        Navigator.push(
+          context,
+          ScaleSlideTransition(page: destination, isLeftScaled: false),
+        );
+      },
+      child: Text(
+        label,
+        style: const TextStyle(color: Colors.white),
       ),
     );
   }
