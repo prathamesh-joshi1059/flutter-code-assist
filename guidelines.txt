@@ -1,1 +1,10 @@
-follow best practices
+Separate UI and logic
+Follow naming conventions
+Avoid duplication
+Use linting/formatting
+Keep widgets small
+Prefer stateless widgets
+Handle errors properly
+Use constants and null safety
+Add method's and variable's types 
+Use SOLID principles 

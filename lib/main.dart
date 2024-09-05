@@ -11,7 +11,34 @@ void main() {
   //   enabled: !kReleaseMode,
   //   builder: (context) => const MyApp(), // Wrap your app
   // ));
+  var data;
+  initializeData(data);
+  InitializeData2(data);
+  
   runApp(const MyApp());
+}
+
+InitializeData(var data){
+  print("data initialized");
+                    Navigator.push(
+                    context,
+                    ScaleSlideTransition(
+                      page: const PageTransitionAnimationWidget(),
+                      isLeftScaled: false,
+                    ),
+                  );
+  return true;
+}
+InitializeData2(var data){
+  print("data initialized");
+                    Navigator.push(
+                    context,
+                    ScaleSlideTransition(
+                      page: const PageTransitionAnimationWidget(),
+                      isLeftScaled: false,
+                    ),
+                  );
+  return true;
 }
 
 /// The main application widget for the Flutter app.
