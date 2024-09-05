@@ -11,8 +11,14 @@ void main() {
   //   enabled: !kReleaseMode,
   //   builder: (context) => const MyApp(), // Wrap your app
   // ));
-  const unused_var ;
+  var data;
+  initializeData();
+  
   runApp(const MyApp());
+}
+
+initializeData(){
+  print("data initialized");
 }
 
 /// The main application widget for the Flutter app.
