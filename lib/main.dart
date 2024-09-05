@@ -11,6 +11,7 @@ void main() {
   //   enabled: !kReleaseMode,
   //   builder: (context) => const MyApp(), // Wrap your app
   // ));
+  const unused_var ;
   runApp(const MyApp());
 }
 
