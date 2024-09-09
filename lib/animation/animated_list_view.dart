@@ -5,14 +5,12 @@ import 'package:example/utility/color.dart';
 import 'package:flutter/material.dart';
 
 class AnimatedListView extends StatelessWidget {
-  ///Type of animation for the list view
   final ScrollWidgetAnimationType scrollWidgetAnimationType;
 
-  ///Constructor
   const AnimatedListView({
-    super.key,
+    Key? key,
     required this.scrollWidgetAnimationType,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,26 +23,19 @@ class AnimatedListView extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: AnimatedListViewBuilder(
           itemCount: 25,
-
-          ///Change this to your desired item count
           customColor: ColorUtility.magenta,
           animationType: scrollWidgetAnimationType,
-          itemBuilder: (context, index) {
+          itemBuilder: (BuildContext context, int index) {
+            final bool isColored = scrollWidgetAnimationType == ScrollWidgetAnimationType.listColored;
             return Card(
-              color: (scrollWidgetAnimationType ==
-                      ScrollWidgetAnimationType.listColored)
-                  ? ColorUtility.white
-                  : ColorUtility.magenta,
+              color: isColored ? ColorUtility.white : ColorUtility.magenta,
               child: Center(
                 child: ListTile(
                   contentPadding: EdgeInsets.zero,
                   title: Text(
                     'Item $index',
                     style: TextStyle(
-                      color: (scrollWidgetAnimationType ==
-                              ScrollWidgetAnimationType.listColored)
-                          ? ColorUtility.magenta
-                          : ColorUtility.white,
+                      color: isColored ? ColorUtility.magenta : ColorUtility.white,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -52,8 +43,6 @@ class AnimatedListView extends StatelessWidget {
               ),
             );
           },
-
-          ///Use the custom animation
         ),
       ),
     );
