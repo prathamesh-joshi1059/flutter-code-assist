@@ -5,6 +5,6 @@ Use data type assertions, not var
 Refactor code without changing functionality
 Comment out, don’t delete, code when refactoring
 Prefer stateless widgets
-Use separate widget over helper methods
+Avoid helper methods for widgets, use separate classes instead.
 Follow naming conventions, SOLID principles and Bloc Architecture
 Handle errors where they might propagate
