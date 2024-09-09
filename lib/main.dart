@@ -1,121 +1,107 @@
-import 'package:animated_flutter_widgets/animated_widgets.dart';
-import 'package:device_preview/device_preview.dart';
-import 'package:example/animation/animation_catlog.dart';
-import 'package:example/page_transition/page_transition_animations.dart';
-import 'package:example/utility/color.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+// Main entry point of the application
 void main() {
-  // runApp(DevicePreview(
-  //   enabled: !kReleaseMode,
-  //   builder: (context) => const MyApp(), // Wrap your app
-  // ));
-  var data;
-  initializeData(data);
-  InitializeData2(data);
-  
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-InitializeData(var data){
-  print("data initialized");
-                    Navigator.push(
-                    context,
-                    ScaleSlideTransition(
-                      page: const PageTransitionAnimationWidget(),
-                      isLeftScaled: false,
-                    ),
-                  );
-  return true;
-}
-InitializeData2(var data){
-  print("data initialized");
-                    Navigator.push(
-                    context,
-                    ScaleSlideTransition(
-                      page: const PageTransitionAnimationWidget(),
-                      isLeftScaled: false,
-                    ),
-                  );
-  return true;
-}
-
-/// The main application widget for the Flutter app.
+// Root widget of the application
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const Animations(),
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-/// The main widget that displays animations in the app.
-class Animations extends StatelessWidget {
-  const Animations({Key? key}) : super(key: key);
+// A stateful widget for the home page
+class MyHomePage extends StatefulWidget {
+  MyHomePage({required this.title});
+
+  final String title;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+
+  // Increment counter function
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    var unusedVariable = 'This variable is unused';
+    int redundantVariable = _counter;
+    var someDynamicValue; // Violates data type assertions
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: ColorUtility.magenta,
-        title: const Text("Animation Widget Example"),
+        title: Text(widget.title),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // SlideInAnimation for Page Transition Animations button
-            SlideInAnimation(
-              direction: Direction.down,
-              duration: const Duration(seconds: 1),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    ScaleSlideTransition(
-                      page: const PageTransitionAnimationWidget(),
-                      isLeftScaled: false,
-                    ),
-                  );
-                },
-                child: const Text(
-                  'Page Transition Animations',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
+          children: <Widget>[
+            Text(
+              'You have pushed the button this many times:',
             ),
-
-            // SlideInAnimation for Animations button
-            SlideInAnimation(
-              direction: Direction.up,
-              duration: const Duration(seconds: 1),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    PopAndScaleTransition(page: const AnimationCatlog()),
-                  );
-                },
-                child: const Text(
-                  'Animations',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
+            _buildCounterText(),
+            _buildIncrementButton(), // Using helper methods for widgets
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter, // Direct setState used
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
+      ),
     );
   }
+
+  // Helper method for counter text
+  Widget _buildCounterText() {
+    return Text(
+      '$_counter', // Should handle potential errors with value propagation
+      style: Theme.of(context).textTheme.headline4,
+    );
+  }
+
+  // Helper method for increment button
+  Widget _buildIncrementButton() {
+    return ElevatedButton(
+      onPressed: _incrementCounter,
+      child: Text('Increment'), // Violates error handling propagation
+    );
+  }
+
+  // Unused method for demonstration purposes
+  void unusedMethod() {
+    // This method does nothing and should be removed
+  }
+}
+
+// Example of a BLoC class violating SOLID principles
+class CounterCubit extends Cubit<int> {
+  CounterCubit() : super(0);
+
+  void increment() {
+    emit(state + 1);
+  }
+}
+
+// Error-prone method without proper error handling
+String fetchData() {
+  return 'data';
 }

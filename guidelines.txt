@@ -8,3 +8,5 @@ Prefer stateless widgets
 Avoid helper methods for widgets, use separate classes instead.
 Follow naming conventions, SOLID principles and Bloc Architecture
 Handle errors where they might propagate
+Use ValueNotifier instead of setState
+Use final and const as needed
