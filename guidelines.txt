@@ -1,1 +1,10 @@
-follow best practices
+Remove unused code
+Identify redundant code and consolidate it into a single, efficient implementation
+Assert return types for methods
+Use data type assertions, not var
+Refactor code without changing functionality
+Comment out, don’t delete, code when refactoring
+Prefer stateless widgets
+Use separate widget over helper methods
+Follow naming conventions, SOLID principles and Bloc Architecture
+Handle errors where they might propagate
