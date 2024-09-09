@@ -101,6 +101,7 @@ class CounterCubit extends Cubit<int> {
   }
 }
 
+
 // Error-prone method without proper error handling
 String fetchData() {
   return 'data';
