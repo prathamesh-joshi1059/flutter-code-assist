@@ -9,196 +9,38 @@ import 'package:example/utility/widgets/animated_dialog_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
-class AnimationCatlog extends StatefulWidget {
-  const AnimationCatlog({Key? key}) : super(key: key);
-
-  @override
-  State<AnimationCatlog> createState() => _AnimationCatlogState();
-}
-
-class _AnimationCatlogState extends State<AnimationCatlog>
-    with TickerProviderStateMixin {
-  List<Widget> widgetList = [];
-  late AnimationController _controller;
-
-  @override
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    if (mounted) {
-      setState(() {
-        widgetList = [
-          /// Steady Animation Button
-          ElevatedButton(
-            style:
-                ElevatedButton.styleFrom(backgroundColor: ColorUtility.magenta),
-            onPressed: () {
-              Navigator.push(
-                context,
-                PopAndScaleTransition(
-                    page: const AnimationExampleWidget(
-                        showContineousAnimations: false,
-                        animationType: AnimationType.steady)),
-              );
-            },
-            child: const Text(
-              'Steady Animation',
-              textAlign: TextAlign.center,
-            ),
-          ),
-
-          /// Continuous Animation Button
-          ElevatedButton(
-            style:
-                ElevatedButton.styleFrom(backgroundColor: ColorUtility.magenta),
-            onPressed: () {
-              Navigator.push(
-                context,
-                PopAndScaleTransition(
-                    page: const AnimationExampleWidget(
-                  showContineousAnimations: true,
-                  animationType: AnimationType.contineous,
-                )),
-              );
-            },
-            child: const Text(
-              'Continuous Animation',
-              textAlign: TextAlign.center,
-            ),
-          ),
-
-          /// Button Tap Animation Button
-          ElevatedButton(
-            style:
-                ElevatedButton.styleFrom(backgroundColor: ColorUtility.magenta),
-            onPressed: () {
-              Navigator.push(
-                context,
-                PopAndScaleTransition(
-                    page: const AnimationExampleWidget(
-                        showContineousAnimations: false,
-                        animationType: AnimationType.buttonTap)),
-              );
-            },
-            child: const Text(
-              'Button Tap Animation',
-              textAlign: TextAlign.center,
-            ),
-          ),
-
-          /// Animated ListView Button
-          ElevatedButton(
-            style:
-                ElevatedButton.styleFrom(backgroundColor: ColorUtility.magenta),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => const AnimatedDialogBox(
-                    title: "Select ListView Animation",
-                    listType: ListType.listView),
-              );
-            },
-            child: const Text(
-              'Animated ListView',
-              textAlign: TextAlign.center,
-            ),
-          ),
-
-          /// Animated GridView Button
-          ElevatedButton(
-            style:
-                ElevatedButton.styleFrom(backgroundColor: ColorUtility.magenta),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => const AnimatedDialogBox(
-                  title: "Select GridView Animation",
-                  listType: ListType.gridView,
-                ),
-              );
-            },
-            child: const Text(
-              'Animated GridView',
-              textAlign: TextAlign.center,
-            ),
-          ),
-
-          /// Animated AppBar Button
-          ElevatedButton(
-            style:
-                ElevatedButton.styleFrom(backgroundColor: ColorUtility.magenta),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => AnimatedDialogBox(
-                  title: "Select AppBar Animation",
-                  actions: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: ColorUtility.magenta),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              PopAndScaleTransition(
-                                  page: const SecondPage(
-                                      appBarAnimationType:
-                                          AppBarAnimationType.slideIn)));
-                        },
-                        child: const Text(
-                          'Slide In Animated AppBar',
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: ColorUtility.magenta),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              PopAndScaleTransition(
-                                  page: const SecondPage(
-                                      appBarAnimationType:
-                                          AppBarAnimationType.fadeIn)));
-                        },
-                        child: const Text(
-                          'Fade In Animated AppBar',
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-            child: const Text(
-              'Animated AppBar',
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ];
-      });
-      _controller = AnimationController(
-        vsync: this,
-        duration: const Duration(milliseconds: 500),
-      );
-    }
-  }
+class AnimationCatalog extends StatelessWidget {
+  const AnimationCatalog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> widgetList = [
+      _buildAnimationButton(
+        context,
+        title: 'Steady Animation',
+        animationType: AnimationType.steady,
+        showContinuousAnimations: false,
+      ),
+      _buildAnimationButton(
+        context,
+        title: 'Continuous Animation',
+        animationType: AnimationType.contineous,
+        showContinuousAnimations: true,
+      ),
+      _buildAnimationButton(
+        context,
+        title: 'Button Tap Animation',
+        animationType: AnimationType.buttonTap,
+        showContinuousAnimations: false,
+      ),
+      _buildListViewButton(context),
+      _buildGridViewButton(context),
+      _buildAppBarButton(context),
+    ];
+
     return Scaffold(
       appBar: FadeInAnimatedAppBar(
-        title: const Text('Animation Catlog'),
+        title: const Text('Animation Catalog'),
         animationDuration: 1000,
         backgroundColor: ColorUtility.magenta,
       ),
@@ -220,10 +62,133 @@ class _AnimationCatlogState extends State<AnimationCatlog>
               duration: const Duration(milliseconds: 600),
               columnCount: 2,
               child: ScaleAnimation(
-                  child: FadeInAnimation(child: widgetList[index])),
+                child: FadeInAnimation(child: widgetList[index]),
+              ),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  ElevatedButton _buildAnimationButton(BuildContext context,
+      {required String title,
+      required AnimationType animationType,
+      required bool showContinuousAnimations}) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: ColorUtility.magenta,
+      ),
+      onPressed: () {
+        Navigator.push(
+          context,
+          PopAndScaleTransition(
+            page: AnimationExampleWidget(
+              showContineousAnimations: showContinuousAnimations,
+              animationType: animationType,
+            ),
+          ),
+        );
+      },
+      child: Text(
+        title,
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  ElevatedButton _buildListViewButton(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: ColorUtility.magenta,
+      ),
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (context) => const AnimatedDialogBox(
+              title: "Select ListView Animation",
+              listType: ListType.listView),
+        );
+      },
+      child: const Text(
+        'Animated ListView',
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  ElevatedButton _buildGridViewButton(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: ColorUtility.magenta,
+      ),
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (context) => const AnimatedDialogBox(
+            title: "Select GridView Animation",
+            listType: ListType.gridView,
+          ),
+        );
+      },
+      child: const Text(
+        'Animated GridView',
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  ElevatedButton _buildAppBarButton(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: ColorUtility.magenta,
+      ),
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (context) => AnimatedDialogBox(
+            title: "Select AppBar Animation",
+            actions: [
+              _buildAppBarActionButton(
+                context,
+                title: 'Slide In Animated AppBar',
+                animationType: AppBarAnimationType.slideIn,
+              ),
+              _buildAppBarActionButton(
+                context,
+                title: 'Fade In Animated AppBar',
+                animationType: AppBarAnimationType.fadeIn,
+              ),
+            ],
+          ),
+        );
+      },
+      child: const Text(
+        'Animated AppBar',
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  ElevatedButton _buildAppBarActionButton(
+      BuildContext context, {
+      required String title,
+      required AppBarAnimationType animationType}) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: ColorUtility.magenta,
+      ),
+      onPressed: () {
+        Navigator.push(
+          context,
+          PopAndScaleTransition(
+            page: SecondPage(appBarAnimationType: animationType),
+          ),
+        );
+      },
+      child: Text(
+        title,
+        textAlign: TextAlign.center,
       ),
     );
   }

@@ -8,17 +8,18 @@ import 'dart:math' as math;
 class AnimationExampleWidget extends StatefulWidget {
   final bool showContineousAnimations;
   final AnimationType? animationType;
-  const AnimationExampleWidget(
-      {super.key,
-      required this.showContineousAnimations,
-      required this.animationType});
+  
+  const AnimationExampleWidget({
+    super.key,
+    required this.showContineousAnimations,
+    required this.animationType,
+  });
 
   @override
   State<AnimationExampleWidget> createState() => _AnimationExampleWidgetState();
 }
 
 class _AnimationExampleWidgetState extends State<AnimationExampleWidget> {
-  Color currentColor = Colors.transparent;
   List<Widget> widgetList = [];
 
   @override
@@ -37,14 +38,8 @@ class _AnimationExampleWidgetState extends State<AnimationExampleWidget> {
       body: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-
-          /// Number of columns
           crossAxisSpacing: 10.0,
-
-          /// Spacing between columns
           mainAxisSpacing: 10.0,
-
-          /// Spacing between rows
         ),
         itemCount: widgetList.length,
         itemBuilder: (BuildContext context, int index) {
@@ -71,7 +66,7 @@ class _AnimationExampleWidgetState extends State<AnimationExampleWidget> {
               ..lineTo(0, 200)
               ..close(),
             duration: const Duration(seconds: 4),
-            child: CircleAvatar(
+            child: const CircleAvatar(
               radius: 20,
               backgroundColor: ColorUtility.magenta,
             ),
@@ -89,26 +84,20 @@ class _AnimationExampleWidgetState extends State<AnimationExampleWidget> {
           /// Rotation 3D Animation
           Rotation3DAnimation(
             angle: math.pi,
-
-            /// 180 degrees in radians
             duration: const Duration(milliseconds: 1000),
             direction: Direction.right,
             isContinuous: true,
             isHalfRotation: false,
-            child: Container(
-              child: ImageColorChangeAnimationUtility.animatedColorImage(
-                imagePath: 'assets/images/walkfor1min.png',
-                initialColor: Colors.blue,
-                colorArray: [
-                  Colors.green,
-                  Colors.blue,
-                  Colors.red,
-                  Colors.purple,
-
-                  /// Add more colors as needed
-                ],
-                duration: const Duration(seconds: 1),
-              ),
+            child: ImageColorChangeAnimationUtility.animatedColorImage(
+              imagePath: 'assets/images/walkfor1min.png',
+              initialColor: Colors.blue,
+              colorArray: [
+                Colors.green,
+                Colors.blue,
+                Colors.red,
+                Colors.purple,
+              ],
+              duration: const Duration(seconds: 1),
             ),
           ),
 
@@ -116,24 +105,24 @@ class _AnimationExampleWidgetState extends State<AnimationExampleWidget> {
           ShakeAnimation(
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta),
+                backgroundColor: ColorUtility.magenta,
+              ),
               onPressed: () {},
               child: const Text('Shake Animation'),
             ),
           ),
 
-          /// Rotation 3D Animation
+          /// 3D Rotation Down Animation
           Rotation3DAnimation(
             angle: math.pi,
-
-            /// 180 degrees in radians
             duration: const Duration(milliseconds: 1000),
             direction: Direction.down,
             isContinuous: true,
             isHalfRotation: false,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta),
+                backgroundColor: ColorUtility.magenta,
+              ),
               onPressed: () {},
               child: const Text(
                 '3D Rotation Down Animation',
@@ -160,7 +149,8 @@ class _AnimationExampleWidgetState extends State<AnimationExampleWidget> {
             isContinuous: true,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta),
+                backgroundColor: ColorUtility.magenta,
+              ),
               onPressed: () {},
               child: const Text(
                 'Cube 3D Animation',
@@ -177,7 +167,8 @@ class _AnimationExampleWidgetState extends State<AnimationExampleWidget> {
             isContinuous: true,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta),
+                backgroundColor: ColorUtility.magenta,
+              ),
               onPressed: () {},
               child: const Text(
                 'Circular 2D Animation',
@@ -187,6 +178,7 @@ class _AnimationExampleWidgetState extends State<AnimationExampleWidget> {
           ),
         ];
         break;
+
       case AnimationType.steady:
         widgetList = [
           /// Slide In Right Animation
@@ -195,7 +187,8 @@ class _AnimationExampleWidgetState extends State<AnimationExampleWidget> {
             duration: const Duration(seconds: 1),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta),
+                backgroundColor: ColorUtility.magenta,
+              ),
               onPressed: () {},
               child: const Text(
                 'Slide In Right Animation',
@@ -211,7 +204,8 @@ class _AnimationExampleWidgetState extends State<AnimationExampleWidget> {
             duration: const Duration(seconds: 1),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta),
+                backgroundColor: ColorUtility.magenta,
+              ),
               onPressed: () {},
               child: const Text(
                 'Slide In Down Animation',
@@ -227,7 +221,8 @@ class _AnimationExampleWidgetState extends State<AnimationExampleWidget> {
             duration: const Duration(seconds: 1),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta),
+                backgroundColor: ColorUtility.magenta,
+              ),
               onPressed: () {},
               child: const Text(
                 'Slide In Up Animation',
@@ -243,7 +238,8 @@ class _AnimationExampleWidgetState extends State<AnimationExampleWidget> {
             duration: const Duration(seconds: 1),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta),
+                backgroundColor: ColorUtility.magenta,
+              ),
               onPressed: () {},
               child: const Text(
                 'Slide In Left Animation',
@@ -253,79 +249,23 @@ class _AnimationExampleWidgetState extends State<AnimationExampleWidget> {
             ),
           ),
 
-          /// 3D Rotation Left Animation
-          Rotation3DAnimation(
-            angle: math.pi,
-
-            /// 180 degrees in radians
-            duration: const Duration(milliseconds: 1000),
-            direction: Direction.left,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta),
-              onPressed: () {},
-              child: const Text(
-                '3D Rotation Left Animation',
-                textAlign: TextAlign.center,
+          /// 3D Rotation Animations
+          for (Direction direction in Direction.values)
+            Rotation3DAnimation(
+              angle: math.pi,
+              duration: const Duration(milliseconds: 1000),
+              direction: direction,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ColorUtility.magenta,
+                ),
+                onPressed: () {},
+                child: Text(
+                  '3D Rotation ${direction.toString().split('.').last.capitalize()} Animation',
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-          ),
-
-          /// 3D Rotation Right Animation
-          Rotation3DAnimation(
-            angle: math.pi,
-
-            /// 180 degrees in radians
-            duration: const Duration(milliseconds: 1000),
-            direction: Direction.right,
-            isContinuous: false,
-            isHalfRotation: false,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta),
-              onPressed: () {},
-              child: const Text(
-                '3D Rotation Right Animation',
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-
-          /// 3D Rotation Up Animation
-          Rotation3DAnimation(
-            angle: math.pi,
-
-            /// 180 degrees in radians
-            duration: const Duration(milliseconds: 1000),
-            direction: Direction.up,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta),
-              onPressed: () {},
-              child: const Text(
-                '3D Rotation Up Animation',
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-
-          /// 3D Rotation Down Animation
-          Rotation3DAnimation(
-            angle: math.pi,
-
-            /// 180 degrees in radians
-            duration: const Duration(milliseconds: 1000),
-            direction: Direction.down,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta),
-              onPressed: () {},
-              child: const Text(
-                '3D Rotation Down Animation',
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
 
           /// Bounce Animation
           BounceAnimation(
@@ -333,7 +273,8 @@ class _AnimationExampleWidgetState extends State<AnimationExampleWidget> {
             duration: const Duration(seconds: 2),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta),
+                backgroundColor: ColorUtility.magenta,
+              ),
               onPressed: () {},
               child: const Text('Bounce Animation'),
             ),
@@ -346,14 +287,16 @@ class _AnimationExampleWidgetState extends State<AnimationExampleWidget> {
             child: SizedBox(
               width: 110,
               height: 110,
-              child: CircleAvatar(
-                  backgroundColor: ColorUtility.magenta,
-                  child: Center(
-                      child: Text(
+              child: const CircleAvatar(
+                backgroundColor: ColorUtility.magenta,
+                child: Center(
+                  child: Text(
                     "Drop and Bounce Animation",
                     style: TextStyle(color: ColorUtility.white),
                     textAlign: TextAlign.center,
-                  ))),
+                  ),
+                ),
+              ),
             ),
           ),
 
@@ -371,8 +314,6 @@ class _AnimationExampleWidgetState extends State<AnimationExampleWidget> {
                   centerTextStyle: const TextStyle(
                     color: Colors.white,
                     fontSize: 6,
-
-                    /// Replace with your desired font size
                   ),
                 ),
               ),
@@ -383,7 +324,8 @@ class _AnimationExampleWidgetState extends State<AnimationExampleWidget> {
           RotationAnimation(
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta),
+                backgroundColor: ColorUtility.magenta,
+              ),
               onPressed: () {},
               child: const Text('Rotation Animation'),
             ),
@@ -394,21 +336,23 @@ class _AnimationExampleWidgetState extends State<AnimationExampleWidget> {
             duration: const Duration(seconds: 1),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta),
+                backgroundColor: ColorUtility.magenta,
+              ),
               onPressed: () {},
               child: const Text('Fade In Animation'),
             ),
           ),
         ];
         break;
+
       case AnimationType.buttonTap:
         widgetList = [
           /// Long Tap Animation
           LongTapAnimation(
-            /// pressDuration: Duration(seconds: 0),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta),
+                backgroundColor: ColorUtility.magenta,
+              ),
               onPressed: () {},
               child: const Text('Long Press Me'),
             ),
@@ -425,7 +369,7 @@ class _AnimationExampleWidgetState extends State<AnimationExampleWidget> {
                 disabledBackgroundColor: ColorUtility.magenta,
               ),
               onPressed: null,
-              child: Text(
+              child: const Text(
                 'Tap Me',
                 style: TextStyle(color: ColorUtility.white),
               ),
@@ -438,13 +382,15 @@ class _AnimationExampleWidgetState extends State<AnimationExampleWidget> {
             scaleValue: 0.95,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta),
+                backgroundColor: ColorUtility.magenta,
+              ),
               onPressed: () {},
               child: const Text('Double Tap Me'),
             ),
-          )
+          ),
         ];
         break;
+
       default:
         break;
     }
