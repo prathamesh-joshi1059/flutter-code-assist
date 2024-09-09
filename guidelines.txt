@@ -1,1 +1,6 @@
-follow best practices
+Clean up any redundant or unused code
+Don't remove any previous comments
+Assert types where required
+Refactor code without changing functionality
+Prefer stateless widgets
+Apply Prettier rules for consistent formatting
