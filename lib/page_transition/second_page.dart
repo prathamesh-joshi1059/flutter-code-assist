@@ -12,9 +12,8 @@ class SecondPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getAppBar(),
+      appBar: _getAppBar(),
 
-      /// Determine which app bar to display
       body: Container(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -39,11 +38,7 @@ class SecondPage extends StatelessWidget {
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                   backgroundColor: ColorUtility.magenta),
-              onPressed: () {
-                Navigator.pop(context);
-
-                /// Navigate back to the previous page
-              },
+              onPressed: () => Navigator.pop(context),
               child: const Text('Go Back'),
             ),
           ],
@@ -52,31 +47,33 @@ class SecondPage extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget getAppBar() {
-    switch (appBarAnimationType) {
-      case AppBarAnimationType.fadeIn:
-
-        /// Display a fade-in animated app bar
-        return FadeInAnimatedAppBar(
-          backgroundColor: ColorUtility.magenta,
-          animationDuration: 1000,
-          title: const Text('Second Page'),
-        );
-      case AppBarAnimationType.slideIn:
-
-        /// Display a slide-in animated app bar
-        return SlideInAnimatedAppBar(
-          backgroundColor: ColorUtility.magenta,
-          animationDuration: 1000,
-          title: const Text('Second Page'),
-        );
-      default:
-
-        /// Display a regular app bar
-        return AppBar(
-          backgroundColor: ColorUtility.magenta,
-          title: const Text('Second Page'),
-        );
+  PreferredSizeWidget _getAppBar() {
+    try {
+      switch (appBarAnimationType) {
+        case AppBarAnimationType.fadeIn:
+          return FadeInAnimatedAppBar(
+            backgroundColor: ColorUtility.magenta,
+            animationDuration: const Duration(milliseconds: 1000),
+            title: const Text('Second Page'),
+          );
+        case AppBarAnimationType.slideIn:
+          return SlideInAnimatedAppBar(
+            backgroundColor: ColorUtility.magenta,
+            animationDuration: const Duration(milliseconds: 1000),
+            title: const Text('Second Page'),
+          );
+        default:
+          return AppBar(
+            backgroundColor: ColorUtility.magenta,
+            title: const Text('Second Page'),
+          );
+      }
+    } catch (e) {
+      // Handle errors from app bar creation
+      return AppBar(
+        backgroundColor: ColorUtility.magenta,
+        title: const Text('Second Page'),
+      );
     }
   }
 }
