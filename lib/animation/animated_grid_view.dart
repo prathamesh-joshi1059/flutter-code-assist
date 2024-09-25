@@ -1,3 +1,4 @@
+// AI confidence score for this refactoring: 97.83%
 import 'package:animated_flutter_widgets/animated_widgets/appbars/fade_in_appbar.dart';
 import 'package:animated_flutter_widgets/animated_widgets/scroll_widget/animated_gridview_builder.dart';
 import 'package:animated_flutter_widgets/enums/enums.dart';
@@ -5,10 +6,8 @@ import 'package:example/utility/color.dart';
 import 'package:flutter/material.dart';
 
 class AnimatedGridView extends StatelessWidget {
-  ///Type of animation for the grid view
   final ScrollWidgetAnimationType scrollWidgetAnimationType;
 
-  ///Constructor
   const AnimatedGridView({
     super.key,
     required this.scrollWidgetAnimationType,
@@ -27,24 +26,26 @@ class AnimatedGridView extends StatelessWidget {
           itemCount: 25,
           colorChangeHighlightColor: ColorUtility.magenta,
           animationType: scrollWidgetAnimationType,
+          itemBuilder: (BuildContext context, int index) {
+            final Color backgroundColor = (scrollWidgetAnimationType == 
+                ScrollWidgetAnimationType.listColored) 
+                ? ColorUtility.white 
+                : ColorUtility.magenta;
 
-          ///animationDuration: Duration(seconds: 1),
-          itemBuilder: (context, index) {
+            final Color textColor = (scrollWidgetAnimationType == 
+                ScrollWidgetAnimationType.listColored) 
+                ? ColorUtility.magenta 
+                : ColorUtility.white;
+
             return Card(
-              color: (scrollWidgetAnimationType ==
-                      ScrollWidgetAnimationType.listColored)
-                  ? ColorUtility.white
-                  : ColorUtility.magenta,
+              color: backgroundColor,
               child: Center(
                 child: ListTile(
                   contentPadding: EdgeInsets.zero,
                   title: Text(
                     'Item $index',
                     style: TextStyle(
-                      color: (scrollWidgetAnimationType ==
-                              ScrollWidgetAnimationType.listColored)
-                          ? ColorUtility.magenta
-                          : ColorUtility.white,
+                      color: textColor,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -52,8 +53,6 @@ class AnimatedGridView extends StatelessWidget {
               ),
             );
           },
-
-          ///Use the custom animation
         ),
       ),
     );

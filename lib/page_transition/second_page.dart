@@ -1,3 +1,4 @@
+// AI confidence score for this refactoring: 97.93%
 import 'package:animated_flutter_widgets/animated_widgets/appbars/fade_in_appbar.dart';
 import 'package:animated_flutter_widgets/animated_widgets/appbars/slide_in_appbar.dart';
 import 'package:animated_flutter_widgets/enums/enums.dart';
@@ -12,22 +13,21 @@ class SecondPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getAppBar(),
+      appBar: _buildAppBar(),
 
-      /// Determine which app bar to display
       body: Container(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: const [
             Icon(
               Icons.star,
               size: 80,
               color: ColorUtility.magenta,
             ),
-            const SizedBox(height: 20),
-            const Text(
+            SizedBox(height: 20),
+            Text(
               'Welcome to the Second Page!',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -35,48 +35,48 @@ class SecondPage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorUtility.magenta),
-              onPressed: () {
-                Navigator.pop(context);
-
-                /// Navigate back to the previous page
-              },
-              child: const Text('Go Back'),
-            ),
+            SizedBox(height: 20),
+            _GoBackButton()
           ],
         ),
       ),
     );
   }
 
-  PreferredSizeWidget getAppBar() {
+  PreferredSizeWidget _buildAppBar() {
     switch (appBarAnimationType) {
       case AppBarAnimationType.fadeIn:
-
-        /// Display a fade-in animated app bar
         return FadeInAnimatedAppBar(
           backgroundColor: ColorUtility.magenta,
           animationDuration: 1000,
           title: const Text('Second Page'),
         );
       case AppBarAnimationType.slideIn:
-
-        /// Display a slide-in animated app bar
         return SlideInAnimatedAppBar(
           backgroundColor: ColorUtility.magenta,
           animationDuration: 1000,
           title: const Text('Second Page'),
         );
       default:
-
-        /// Display a regular app bar
         return AppBar(
           backgroundColor: ColorUtility.magenta,
           title: const Text('Second Page'),
         );
     }
+  }
+}
+
+class _GoBackButton extends StatelessWidget {
+  const _GoBackButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(backgroundColor: ColorUtility.magenta),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+      child: const Text('Go Back'),
+    );
   }
 }

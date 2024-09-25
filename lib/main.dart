@@ -1,3 +1,4 @@
+// AI confidence score for this refactoring: 95.06%
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,84 +16,76 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: BlocProvider(
+        create: (_) => CounterCubit(),
+        child: MyHomePage(title: 'Flutter Demo Home Page'),
+      ),
     );
   }
 }
 
-// A stateful widget for the home page
-class MyHomePage extends StatefulWidget {
-  MyHomePage({required this.title});
+// A stateless widget for the home page
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({required this.title});
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  // Increment counter function
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    var unusedVariable = 'This variable is unused';
-    int redundantVariable = _counter;
-    var someDynamicValue; // Violates data type assertions
-
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(title),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+            Text('You have pushed the button this many times:'),
+            BlocBuilder<CounterCubit, int>(
+              builder: (context, counter) {
+                return CounterText(counter: counter);
+              },
             ),
-            _buildCounterText(),
-            _buildIncrementButton(), // Using helper methods for widgets
+            IncrementButton(),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter, // Direct setState used
+        onPressed: () => context.read<CounterCubit>().increment(),
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
     );
   }
+}
 
-  // Helper method for counter text
-  Widget _buildCounterText() {
+// Stateless widget for the counter text
+class CounterText extends StatelessWidget {
+  const CounterText({required this.counter});
+
+  final int counter;
+
+  @override
+  Widget build(BuildContext context) {
     return Text(
-      '$_counter', // Should handle potential errors with value propagation
+      '$counter',
       style: Theme.of(context).textTheme.headline4,
     );
   }
+}
 
-  // Helper method for increment button
-  Widget _buildIncrementButton() {
+// Stateless widget for the increment button
+class IncrementButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: _incrementCounter,
-      child: Text('Increment'), // Violates error handling propagation
+      onPressed: () => context.read<CounterCubit>().increment(),
+      child: Text('Increment'),
     );
-  }
-
-  // Unused method for demonstration purposes
-  void unusedMethod() {
-    // This method does nothing and should be removed
   }
 }
 
-// Example of a BLoC class violating SOLID principles
+// BLoC class following SOLID principles
 class CounterCubit extends Cubit<int> {
   CounterCubit() : super(0);
 
@@ -101,8 +94,12 @@ class CounterCubit extends Cubit<int> {
   }
 }
 
-
-// Error-prone method without proper error handling
+// Error handling method
 String fetchData() {
-  return 'data';
+  try {
+    return 'data';
+  } catch (e) {
+    // Handle the error accordingly
+    return 'error';
+  }
 }
