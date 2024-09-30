@@ -34,7 +34,6 @@ import 'package:work_permit_mobile_app/modules/login/model/work_status_menu_mode
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
-
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
 }
