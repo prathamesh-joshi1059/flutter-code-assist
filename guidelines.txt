@@ -1,0 +1,11 @@
+Remove unused code
+Identify redundant code and consolidate it into a single, efficient implementation
+Assert return types for methods
+Use data type assertions, not var
+Comment out, don’t delete, code when refactoring
+Avoid helper methods for widgets, use separate classes instead.
+Follow naming conventions, SOLID principles and Bloc Architecture
+Use ValueNotifier instead of setState
+please keep the formatting unchanged
+do not remove one line comments
+List the issues in the code that violate TypeScript coding standards without providing suggestions or solutions and Place this list as a comment in the last line

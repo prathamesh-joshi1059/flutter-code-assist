@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "951884656040",
+    "project_id": "work-permit-4c80a",
+    "storage_bucket": "work-permit-4c80a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:951884656040:android:0ea606f2b68c94be75c19d",
+        "android_client_info": {
+          "package_name": "com.zingworks.workpermit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ33fpgwAQKKTJfu5Ab_p-0Iyykt8IV54"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
