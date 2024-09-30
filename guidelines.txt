@@ -8,4 +8,4 @@ Follow naming conventions, SOLID principles and Bloc Architecture
 Use ValueNotifier instead of setState
 please keep the formatting unchanged
 do not remove one line comments
-List the issues in the code that violate TypeScript coding standards without providing suggestions or solutions and Place this list as a comment in the last line
+List the issues in the code that violate Dart/Flutter coding standards without providing suggestions or solutions and Place this list as a comment in the last line
